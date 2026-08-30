@@ -1,0 +1,64 @@
+name: Release
+
+# Triggered by pushing a semver tag (e.g. `v1.0.0`). Builds the library, runs the full test
+# suite, and publishes a GitHub Release with the main JAR, sources JAR, and Javadoc JAR attached.
+on:
+  push:
+    tags: ["v*.*.*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to release (e.g. v1.0.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+
+      - name: Determine release tag
+        id: tag
+        run: echo "tag=${{ github.event.inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
+
+      - name: Verify pom.xml version matches the tag
+        run: |
+          TAG="${{ steps.tag.outputs.tag }}"
+          TAG_VERSION="${TAG#v}"
+          POM_VERSION="$(mvn -q -B help:evaluate -Dexpression=project.version -DforceStdout)"
+          echo "Tag version: $TAG_VERSION"
+          echo "pom.xml version: $POM_VERSION"
+          if [ "$TAG_VERSION" != "$POM_VERSION" ]; then
+            echo "::error::Tag $TAG does not match pom.xml version $POM_VERSION"
+            exit 1
+          fi
+
+      - name: Run full verification build
+        run: mvn -B clean verify
+
+      - name: Build release artifacts (jar, sources, javadoc)
+        run: mvn -B clean package
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: date-util ${{ steps.tag.outputs.tag }}
+          generate_release_notes: true
+          files: |
+            target/date-util-*.jar
+          fail_on_unmatched_files: true

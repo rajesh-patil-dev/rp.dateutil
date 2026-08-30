@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="date-util-ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+    <description>
+        PMD ruleset for date-util. Focused on correctness and reasonable best-practice checks.
+        Invoked on demand by the "code-review" GitHub Actions workflow via `mvn pmd:check`; not
+        bound to the default Maven build lifecycle.
+    </description>
+
+    <rule ref="category/java/errorprone.xml">
+        <!-- Repeated precondition messages such as "date must not be null" across sibling
+             overloads are intentional and clearer inline than extracted into shared constants. -->
+        <exclude name="AvoidDuplicateLiterals"/>
+        <!-- Comparing a parsed character against a literal char (e.g. c == '\'') is idiomatic. -->
+        <exclude name="AvoidLiteralsInIfCondition"/>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="GuardLogStatement"/>
+        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
+    </rule>
+
+    <rule ref="category/java/design.xml/AvoidDeeplyNestedIfStmts"/>
+    <rule ref="category/java/design.xml/ExcessiveParameterList"/>
+
+    <rule ref="category/java/multithreading.xml">
+        <exclude name="UseConcurrentHashMap"/>
+    </rule>
+</ruleset>
