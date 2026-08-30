@@ -39,7 +39,7 @@ jobs:
           cache: maven
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v4
         with:
           languages: java-kotlin
           queries: security-extended
@@ -48,7 +48,7 @@ jobs:
         run: mvn -B clean compile -DskipTests
 
       - name: Perform CodeQL analysis
-        uses: github/codeql-action/analyze@v3
+        uses: github/codeql-action/analyze@v4
         with:
           category: "/language:java-kotlin"
 
@@ -70,26 +70,40 @@ jobs:
           java-version: "17"
           cache: maven
 
+      # The NVD API has required a registered API key for reliable access since 2024; without one,
+      # requests are frequently rejected (HTTP 403) and this step fails outright before it can
+      # write any report. Get a free key at https://nvd.nist.gov/developers/request-an-api-key
+      # and add it as the repository secret NVD_API_KEY (Settings > Secrets and variables >
+      # Actions) to enable full OWASP dependency scanning. `continue-on-error` and the `if`
+      # guards below keep that external, quota-driven failure from blocking CodeQL and gitleaks,
+      # which are this workflow's other, always-on security signals.
       - name: Run OWASP Dependency-Check
+        id: dependency-check
+        continue-on-error: true
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
-        run: |
-          mvn -B org.owasp:dependency-check-maven:check \
-            -DnvdApiKey="${NVD_API_KEY}" \
-            -Dformats=HTML,SARIF
+        # `formats` (plural) explicitly requests both reports; pom.xml's <format>ALL</format> is
+        # the fallback default for other invocations (e.g. a local `mvn dependency-check:check`).
+        run: mvn -B org.owasp:dependency-check-maven:check -DnvdApiKey="${NVD_API_KEY}" -Dformats=HTML,SARIF
 
       - name: Upload SARIF report to GitHub Security tab
-        if: always()
-        uses: github/codeql-action/upload-sarif@v3
+        if: always() && hashFiles('target/dependency-check-report.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v4
         with:
           sarif_file: target/dependency-check-report.sarif
 
       - name: Upload Dependency-Check report
-        if: always()
+        if: always() && hashFiles('target/dependency-check-report.html') != ''
         uses: actions/upload-artifact@v4
         with:
           name: dependency-check-report
           path: target/dependency-check-report.html
+
+      - name: Fail if Dependency-Check found vulnerabilities (not just an NVD update failure)
+        if: steps.dependency-check.outcome == 'failure' && hashFiles('target/dependency-check-report.html') != ''
+        run: |
+          echo "::error::Dependency-Check completed but reported vulnerabilities above the configured CVSS threshold."
+          exit 1
           retention-days: 14
 
   secret-scan:

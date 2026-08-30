@@ -420,6 +420,8 @@ This repository ships with a full GitHub Actions CI/CD pipeline under [`.github/
 | [`docker-publish.yml`](.github/workflows/docker-publish.yml) | Builds a reproducible Docker image containing the built JARs and publishes it to GitHub Container Registry (GHCR). |
 | [`release.yml`](.github/workflows/release.yml) | Triggered by pushing a `vX.Y.Z` tag: builds, tests, and publishes a GitHub Release with the JAR, sources JAR, and Javadoc JAR attached. |
 
+> **Enabling full OWASP Dependency-Check scanning:** the NVD API used by `security-scan.yml` requires a registered API key for reliable access. Request a free key at [nvd.nist.gov/developers/request-an-api-key](https://nvd.nist.gov/developers/request-an-api-key) and add it as the repository secret `NVD_API_KEY` (Settings → Secrets and variables → Actions). Without it, that one step is skipped gracefully rather than failing the workflow; CodeQL and gitleaks still run on every push and pull request.
+
 ## Running with Docker
 
 `date-util` is a library, not a service, so the Docker image is a **reproducible build / distribution artifact carrier** rather than something you run as a process. It is useful for extracting a build of the JAR without needing a local Maven/JDK setup, or without a private Maven repository:
