@@ -1,4 +1,4 @@
-package io.github.rajeshpatildev.dateutil;
+package io.github.rp.dateutil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;

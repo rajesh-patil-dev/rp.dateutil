@@ -1,4 +1,4 @@
-package io.github.rajeshpatildev.dateutil;
+package io.github.rp.dateutil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

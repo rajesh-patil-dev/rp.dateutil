@@ -14,14 +14,14 @@
  * <h2>Null-handling policy</h2>
  * This library applies one consistent null-handling contract across every class:
  * <ol>
- *   <li><b>Conversion methods</b> ({@link io.github.rajeshpatildev.dateutil.DateConversionUtils},
- *       {@link io.github.rajeshpatildev.dateutil.TimezoneUtils} conversions) that return an object type
+ *   <li><b>Conversion methods</b> ({@link io.github.rp.dateutil.DateConversionUtils},
+ *       {@link io.github.rp.dateutil.TimezoneUtils} conversions) that return an object type
  *       return {@code null} when the primary date/time input is {@code null}. If the method also
  *       accepts a required {@link java.time.ZoneId} or similar parameter, that parameter must not
  *       be {@code null} even when the primary input is {@code null}; passing a {@code null}
  *       {@code ZoneId} always throws {@link java.lang.NullPointerException}, regardless of the
  *       primary input.</li>
- *   <li><b>Formatting methods</b> ({@link io.github.rajeshpatildev.dateutil.DateFormattingUtils#formatDate},
+ *   <li><b>Formatting methods</b> ({@link io.github.rp.dateutil.DateFormattingUtils#formatDate},
  *       {@code formatDateTime}, {@code formatZonedDateTime}) return {@code null} when the
  *       date/time input is {@code null}. A {@code null} pattern or formatter always throws
  *       {@link java.lang.NullPointerException}.</li>
@@ -31,8 +31,8 @@
  *       {@link java.lang.IllegalArgumentException}. A syntactically invalid date/time string
  *       throws {@link java.time.format.DateTimeParseException}.</li>
  *   <li><b>Arithmetic, comparison, and calendar methods</b> ({@link
- *       io.github.rajeshpatildev.dateutil.DateArithmeticUtils}, {@link
- *       io.github.rajeshpatildev.dateutil.DateComparisonUtils}) always require a non-null date/time
+ *       io.github.rp.dateutil.DateArithmeticUtils}, {@link
+ *       io.github.rp.dateutil.DateComparisonUtils}) always require a non-null date/time
  *       argument and throw {@link java.lang.NullPointerException} if it is {@code null}, because
  *       there is no meaningful result (and, for primitive {@code long}/{@code boolean}/{@code int}
  *       return types, no sentinel value to represent "no answer").</li>
@@ -49,4 +49,4 @@
  * java.time.ZoneId#systemDefault()} and say so explicitly in their JavaDoc; prefer the
  * zone-explicit overload whenever the timezone matters to your application.
  */
-package io.github.rajeshpatildev.dateutil;
+package io.github.rp.dateutil;

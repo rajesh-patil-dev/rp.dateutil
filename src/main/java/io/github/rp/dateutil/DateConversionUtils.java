@@ -1,4 +1,4 @@
-package io.github.rajeshpatildev.dateutil;
+package io.github.rp.dateutil;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -17,7 +17,7 @@ import java.util.Objects;
  * types ({@link LocalDate}, {@link LocalDateTime}, {@link ZonedDateTime}, {@link OffsetDateTime},
  * {@link Instant}, {@link OffsetTime}), plus Unix epoch conversions.
  *
- * <p>See the {@link io.github.rajeshpatildev.dateutil package documentation} for this library's
+ * <p>See the {@link io.github.rp.dateutil package documentation} for this library's
  * null-handling policy. In short: every method here returns {@code null} when its primary
  * date/time argument is {@code null}, except methods returning a primitive ({@code long}), which
  * throw {@link NullPointerException} instead since there is no primitive null.
