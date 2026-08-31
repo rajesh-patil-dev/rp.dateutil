@@ -1,4 +1,4 @@
-package com.yourcompany.dateutil;
+package io.github.rajeshpatildev.dateutil;
 
 import java.time.Instant;
 import java.time.LocalDate;

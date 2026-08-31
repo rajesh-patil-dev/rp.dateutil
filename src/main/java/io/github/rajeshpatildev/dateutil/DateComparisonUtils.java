@@ -1,4 +1,4 @@
-package com.yourcompany.dateutil;
+package io.github.rajeshpatildev.dateutil;
 
 import java.time.DayOfWeek;
 import java.time.Instant;

@@ -5,7 +5,7 @@
 [![Security Scan](https://github.com/rajesh-patil-dev/rp.dateutil/actions/workflows/security-scan.yml/badge.svg)](https://github.com/rajesh-patil-dev/rp.dateutil/actions/workflows/security-scan.yml)
 [![Java 17+](https://img.shields.io/badge/Java-17%2B-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#license)
-[![Maven Central compatible](https://img.shields.io/badge/artifact-com.yourcompany%3Adate--util-brightgreen)](#maven-installation)
+[![Maven Central compatible](https://img.shields.io/badge/artifact-io.github.rajesh--patil--dev%3Adate--util-brightgreen)](#maven-installation)
 
 **date-util** is a production-ready, dependency-free **Java date and time utility library** built entirely on the modern **`java.time` (JSR-310) API**. It gives Java and **Spring Boot** applications a single, well-tested, thread-safe toolkit for date conversion, parsing, formatting, arithmetic, comparison, and **timezone-safe** date/time handling — without pulling in Joda-Time, Apache Commons Lang, or any other third-party runtime dependency.
 
@@ -69,7 +69,7 @@ Add the dependency to your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>com.yourcompany</groupId>
+    <groupId>io.github.rajesh-patil-dev</groupId>
     <artifactId>date-util</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -80,13 +80,13 @@ Requires **Java 17 or later**. No other configuration, Spring beans, or auto-con
 **Gradle (Kotlin DSL)**:
 
 ```kotlin
-implementation("com.yourcompany:date-util:1.0.0")
+implementation("io.github.rajesh-patil-dev:date-util:1.0.0")
 ```
 
 **Gradle (Groovy DSL)**:
 
 ```groovy
-implementation 'com.yourcompany:date-util:1.0.0'
+implementation 'io.github.rajesh-patil-dev:date-util:1.0.0'
 ```
 
 > `date-util` is not (yet) published to Maven Central. Build it from source with `mvn clean install` (see [Build Instructions](#build-instructions)) to publish it to your local `~/.m2` repository, or point your build at a private/internal Maven repository hosting the JAR.
@@ -94,7 +94,7 @@ implementation 'com.yourcompany:date-util:1.0.0'
 ## Quick Start
 
 ```java
-import com.yourcompany.dateutil.DateUtils;
+import io.github.rajeshpatildev.dateutil.DateUtils;
 import java.time.LocalDate;
 
 LocalDate date = DateUtils.parseDate("30-08-2026", "dd-MM-yyyy");
@@ -110,10 +110,10 @@ No Spring beans, no configuration classes, no `@Autowired` — `DateUtils` and e
 
 ## Package & Class Overview
 
-Everything lives in a single package: `com.yourcompany.dateutil`.
+Everything lives in a single package: `io.github.rajeshpatildev.dateutil`.
 
 ```
-com.yourcompany.dateutil
+io.github.rajeshpatildev.dateutil
 ├── DateConversionUtils    // Date <-> java.time type conversions, epoch conversions
 ├── DateFormattingUtils    // Parsing and formatting via DateTimeFormatter
 ├── DateArithmeticUtils    // add/subtract days, weeks, months, years, hours, minutes, seconds
@@ -132,7 +132,7 @@ Every public class is `final` with a private constructor: none of them can be in
 ### Parsing & Formatting
 
 ```java
-import com.yourcompany.dateutil.DateFormattingUtils;
+import io.github.rajeshpatildev.dateutil.DateFormattingUtils;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -166,7 +166,7 @@ Formatters built from a pattern string are compiled once and cached internally (
 ### Date Conversion
 
 ```java
-import com.yourcompany.dateutil.DateConversionUtils;
+import io.github.rajeshpatildev.dateutil.DateConversionUtils;
 import java.time.*;
 import java.util.Date;
 
@@ -193,7 +193,7 @@ OffsetDateTime odt = DateConversionUtils.toOffsetDateTime(instant, ZoneOffset.UT
 ### Date Arithmetic
 
 ```java
-import com.yourcompany.dateutil.DateArithmeticUtils;
+import io.github.rajeshpatildev.dateutil.DateArithmeticUtils;
 import java.time.LocalDate;
 
 LocalDate date = LocalDate.of(2026, 1, 31);
@@ -212,7 +212,7 @@ Month and year arithmetic correctly clamps to the last valid day of the resultin
 ### Date Comparison & Differences
 
 ```java
-import com.yourcompany.dateutil.DateComparisonUtils;
+import io.github.rajeshpatildev.dateutil.DateComparisonUtils;
 import java.time.LocalDate;
 
 LocalDate a = LocalDate.of(2026, 8, 1);
@@ -239,7 +239,7 @@ Difference calculations return a **signed** result: positive when the end date i
 `date-util` deliberately distinguishes two operations that are easy to confuse:
 
 ```java
-import com.yourcompany.dateutil.TimezoneUtils;
+import io.github.rajeshpatildev.dateutil.TimezoneUtils;
 import java.time.*;
 
 ZoneId utc = ZoneId.of("UTC");
@@ -261,7 +261,7 @@ Conflating these two operations is one of the most common sources of timezone bu
 ### Start of Day / End of Day (DST-Safe)
 
 ```java
-import com.yourcompany.dateutil.TimezoneUtils;
+import io.github.rajeshpatildev.dateutil.TimezoneUtils;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -277,7 +277,7 @@ TimezoneUtils.endOfDay(date, newYork);   // one nanosecond before the NEXT day's
 ### Calendar Utilities
 
 ```java
-import com.yourcompany.dateutil.DateUtils;
+import io.github.rajeshpatildev.dateutil.DateUtils;
 import java.time.LocalDate;
 
 LocalDate date = LocalDate.of(2026, 8, 30);
@@ -293,7 +293,7 @@ DateUtils.isLeapYear(date);     // false
 ### Epoch (Unix Timestamp) Conversion
 
 ```java
-import com.yourcompany.dateutil.DateConversionUtils;
+import io.github.rajeshpatildev.dateutil.DateConversionUtils;
 import java.time.Instant;
 
 Instant now = Instant.now();
@@ -321,7 +321,7 @@ All epoch values are UTC-based, per the Unix epoch definition, and negative epoc
 
 ## Null-Handling Policy
 
-`date-util` applies **one consistent null-handling contract** across every class (documented in full in the `com.yourcompany.dateutil` package Javadoc):
+`date-util` applies **one consistent null-handling contract** across every class (documented in full in the `io.github.rajeshpatildev.dateutil` package Javadoc):
 
 | Method category | Behavior on `null` primary argument |
 |---|---|
@@ -350,7 +350,7 @@ This means: converting or formatting a `null` date is a safe no-op that returns 
 
 ## Thread Safety
 
-- Every class in `com.yourcompany.dateutil` is `final`, has a private constructor, and holds **no mutable instance or static state** beyond an internal, thread-safe formatter cache (a `ConcurrentHashMap` of immutable `DateTimeFormatter` instances).
+- Every class in `io.github.rajeshpatildev.dateutil` is `final`, has a private constructor, and holds **no mutable instance or static state** beyond an internal, thread-safe formatter cache (a `ConcurrentHashMap` of immutable `DateTimeFormatter` instances).
 - All formatting and parsing goes through `java.time.format.DateTimeFormatter`, which — unlike the legacy `java.text.SimpleDateFormat` — is immutable and safe to share across threads.
 - Because there is no shared mutable state anywhere in the library, every public method is safe to call concurrently from any number of threads without external synchronization.
 
@@ -359,7 +359,7 @@ This means: converting or formatting a `null` date is a safe no-op that returns 
 No Spring-specific integration is required. Add the Maven dependency and start calling the static methods directly — there are no beans, no `@Configuration` classes, and no auto-configuration to opt into or out of:
 
 ```java
-import com.yourcompany.dateutil.DateUtils;
+import io.github.rajeshpatildev.dateutil.DateUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.yourcompany.dateutil;
+package io.github.rajeshpatildev.dateutil;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
