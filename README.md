@@ -5,7 +5,7 @@
 [![Security Scan](https://github.com/rajesh-patil-dev/rp.dateutil/actions/workflows/security-scan.yml/badge.svg)](https://github.com/rajesh-patil-dev/rp.dateutil/actions/workflows/security-scan.yml)
 [![Java 17+](https://img.shields.io/badge/Java-17%2B-orange)](https://openjdk.org/projects/jdk/17/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](#license)
-[![Maven Central compatible](https://img.shields.io/badge/artifact-io.github.rajesh--patil--dev%3Adate--util-brightgreen)](#maven-installation)
+[![Maven Central compatible](https://img.shields.io/badge/artifact-io.github.rp%3Adate--util-brightgreen)](#maven-installation)
 
 **date-util** is a production-ready, dependency-free **Java date and time utility library** built entirely on the modern **`java.time` (JSR-310) API**. It gives Java and **Spring Boot** applications a single, well-tested, thread-safe toolkit for date conversion, parsing, formatting, arithmetic, comparison, and **timezone-safe** date/time handling — without pulling in Joda-Time, Apache Commons Lang, or any other third-party runtime dependency.
 
@@ -69,7 +69,7 @@ Add the dependency to your `pom.xml`:
 
 ```xml
 <dependency>
-    <groupId>io.github.rajesh-patil-dev</groupId>
+    <groupId>io.github.rp</groupId>
     <artifactId>date-util</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -80,13 +80,13 @@ Requires **Java 17 or later**. No other configuration, Spring beans, or auto-con
 **Gradle (Kotlin DSL)**:
 
 ```kotlin
-implementation("io.github.rajesh-patil-dev:date-util:1.0.0")
+implementation("io.github.rp:date-util:1.0.0")
 ```
 
 **Gradle (Groovy DSL)**:
 
 ```groovy
-implementation 'io.github.rajesh-patil-dev:date-util:1.0.0'
+implementation 'io.github.rp:date-util:1.0.0'
 ```
 
 > `date-util` is not (yet) published to Maven Central. Build it from source with `mvn clean install` (see [Build Instructions](#build-instructions)) to publish it to your local `~/.m2` repository, or point your build at a private/internal Maven repository hosting the JAR.
